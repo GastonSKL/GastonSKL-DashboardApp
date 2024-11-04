@@ -1,16 +1,22 @@
-import { ThemedLayoutV2, ThemedTitleV2 } from '@refinedev/antd'
-import React from 'react'
-import Header from './header'
+import React from "react";
 
-const Layout = ({children}: React.PropsWithChildren) => {
+import { ThemedLayoutV2, ThemedTitleV2 } from "@refinedev/antd";
+
+// import { GitHubBanner } from "./gh-banner";
+
+import Header from "./Header";
+export const Layout = ({ children }: React.PropsWithChildren) => {
   return (
-    <ThemedLayoutV2
-      Header={Header}
-      Title={(titleProps) => <ThemedTitleV2 {...titleProps} text="Refine"/>}
-    >
-      {children}
-    </ThemedLayoutV2>
-  )
-}
-
-export default Layout
+    <>
+      {/* <GitHubBanner /> */}
+      <ThemedLayoutV2
+        Header={Header}
+        Title={(titleProps) => {
+          return <ThemedTitleV2 {...titleProps} text="Refine" />;
+        }}
+      >
+        {children}
+      </ThemedLayoutV2>
+    </>
+  );
+};

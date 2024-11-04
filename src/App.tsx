@@ -20,7 +20,8 @@ import routerBindings, {
 import { App as AntdApp } from "antd";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import { Home, ForgotPassword, Login, Register } from "./pages";
-import Layout from "./components/layout";
+import {Layout} from './components/layout/index'
+import { resources } from "./config/resources";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
               notificationProvider={useNotificationProvider}
               routerProvider={routerBindings}
               authProvider={authProvider}
+              resources={resources}
               options={{
                 syncWithLocation: true,
                 warnWhenUnsavedChanges: true,
@@ -44,10 +46,7 @@ function App() {
               }}
             >
               <Routes>
-                <Route path="/register" element={<Register />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/forgot-password" element={<ForgotPassword />} />
-                <Route
+              <Route
                   element={
                     <Authenticated
                       key="authenticated-layout"
@@ -61,6 +60,10 @@ function App() {
                 >
                   <Route index element={<Home />} />
                 </Route>
+                <Route path="/register" element={<Register />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+                
               </Routes>
               <RefineKbar />
               <UnsavedChangesNotifier />
