@@ -26,7 +26,6 @@ import { resources } from "./config/resources";
 function App() {
   return (
     <BrowserRouter>
-      <GitHubBanner />
       <RefineKbarProvider>
         <AntdApp>
           <DevtoolsProvider>
