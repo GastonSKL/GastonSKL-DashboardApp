@@ -19,7 +19,7 @@ import routerBindings, {
 } from "@refinedev/react-router-v6";
 import { App as AntdApp } from "antd";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
-import { Home, ForgotPassword, Login, Register, List } from "./pages";
+import { Home, ForgotPassword, Login, Register, CompanyList } from "./pages";
 import {Layout} from './components/layout/index'
 import { resources } from "./config/resources";
 
@@ -58,7 +58,7 @@ function App() {
                   }
                 >
                   <Route index element={<Home />} />
-                  <Route path="/companies" element={<List />} />
+                  <Route path="/companies" element={<CompanyList />} />
                 </Route>
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
