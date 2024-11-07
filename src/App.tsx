@@ -22,6 +22,7 @@ import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import { Home, ForgotPassword, Login, Register, CompanyList } from "./pages";
 import {Layout} from './components/layout/index'
 import { resources } from "./config/resources";
+import Create from "./pages/companies/create";
 
 function App() {
   return (
@@ -58,7 +59,10 @@ function App() {
                   }
                 >
                   <Route index element={<Home />} />
-                  <Route path="/companies" element={<CompanyList />} />
+                  <Route path="/companies" >
+                    <Route index element={<CompanyList />}/>
+                    <Route path="new" element={<Create />}/>
+                  </Route>
                 </Route>
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
