@@ -89,7 +89,7 @@ const DashboardLatestActivities = () => {
                   }
                   description={
                     <Space size={4}>
-                        <Text strong>{item?.user.name}</Text>
+                        <Text strong>{item?.user?.name ||""}</Text>
                         <Text>{item?.action === 'CREATE' ? 'created' : 'moved'}</Text>
                         <Text strong>{deal?.title}</Text>
                         <Text>deal</Text>
