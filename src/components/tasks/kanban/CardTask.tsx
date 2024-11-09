@@ -21,7 +21,7 @@ import {
 } from "antd";
 import { MenuProps } from "antd/lib";
 import dayjs from "dayjs";
-import React, { useMemo } from "react";
+import React, { memo, useMemo } from "react";
 
 interface CardTaskProp {
   id: string;
@@ -164,3 +164,13 @@ const CardTask = ({ id, title, dueDate, users }: CardTaskProp) => {
 };
 
 export default CardTask;
+
+export const CardTaskMemo = memo(CardTask, (prev, next) => {
+  return (
+    prev.id === next.id &&
+    prev.title === next.title &&
+    prev.dueDate === next.dueDate &&
+    prev.users?.length === next.users?.length &&
+    prev.updatedAt === next.updatedAt
+  );
+});
