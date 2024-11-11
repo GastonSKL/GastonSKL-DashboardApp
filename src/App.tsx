@@ -20,11 +20,13 @@ import routerBindings, {
 import { App as AntdApp } from "antd";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import { Home, ForgotPassword, Login, Register, CompanyList } from "./pages";
-import {Layout} from './components/layout/index'
+import { Layout } from "./components/layout/index";
 import { resources } from "./config/resources";
 import Create from "./pages/companies/create";
 import EditPage from "./pages/companies/edit";
 import TasksList from "./pages/tasks/list";
+import TaskCreatePage from "./pages/tasks/create";
+import TaskEditPage from "./pages/tasks/edit";
 
 function App() {
   return (
@@ -48,7 +50,7 @@ function App() {
               }}
             >
               <Routes>
-              <Route
+                <Route
                   element={
                     <Authenticated
                       key="authenticated-layout"
@@ -61,19 +63,26 @@ function App() {
                   }
                 >
                   <Route index element={<Home />} />
-                  <Route path="/companies" >
-                    <Route index element={<CompanyList />}/>
-                    <Route path="new" element={<Create />}/>
-                    <Route path="edit/:id" element={<EditPage />}/>
+                  <Route path="/companies">
+                    <Route index element={<CompanyList />} />
+                    <Route path="new" element={<Create />} />
+                    <Route path="edit/:id" element={<EditPage />} />
                   </Route>
-                  <Route path="/tasks">
-                    <Route index element={<TasksList />}/>
+                  <Route
+                    path="/tasks"
+                    element={
+                      <TasksList>
+                        <Outlet />
+                      </TasksList>
+                    }
+                  >
+                    <Route path="new" element={<TaskCreatePage />}/>
+                    <Route path="edit/:id" element={<TaskEditPage />}/>
                   </Route>
                 </Route>
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
-                
               </Routes>
               <RefineKbar />
               <UnsavedChangesNotifier />

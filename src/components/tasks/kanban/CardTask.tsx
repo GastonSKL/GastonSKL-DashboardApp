@@ -9,6 +9,7 @@ import {
   EyeOutlined,
   MoreOutlined,
 } from "@ant-design/icons";
+import { useDelete, useNavigation } from "@refinedev/core";
 import {
   Button,
   Card,
@@ -38,7 +39,9 @@ interface CardTaskProp {
 const CardTask = ({ id, title, dueDate, users }: CardTaskProp) => {
   const { token } = theme.useToken();
 
-  const edit = () => {};
+  const { edit } = useNavigation();
+
+  const { mutate: deleteTask } = useDelete();
 
   const dropdownItems = useMemo(() => {
     const dropdownItems: MenuProps["items"] = [
@@ -47,7 +50,7 @@ const CardTask = ({ id, title, dueDate, users }: CardTaskProp) => {
         key: "1",
         icon: <EyeOutlined />,
         onClick: () => {
-          edit();
+          edit("tasks", id, "replace");
         },
       },
       {
@@ -55,7 +58,15 @@ const CardTask = ({ id, title, dueDate, users }: CardTaskProp) => {
         label: "Delete card",
         icon: <DeleteOutlined />,
         key: "2",
-        onClick: () => {},
+        onClick: () => {
+          deleteTask({
+            resource: "tasks",
+            id,
+            meta: {
+              operation: "task",
+            },
+          });
+        },
       },
     ];
 
@@ -89,12 +100,18 @@ const CardTask = ({ id, title, dueDate, users }: CardTaskProp) => {
       <Card
         size="small"
         title={<Text ellipsis={{ tooltip: title }}>{title}</Text>}
-        onClick={() => edit()}
+        onClick={() => edit("tasks", id, "replace")}
         extra={
           <Dropdown
             trigger={["click"]}
             menu={{
               items: dropdownItems,
+              onPointerDown: (e) => {
+                e.stopPropagation();
+              },
+              onClick: (e) => {
+                e.domEvent.stopPropagation();
+              },
             }}
             placement="bottom"
             arrow={{ pointAtCenter: true }}
