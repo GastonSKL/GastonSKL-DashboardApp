@@ -128,7 +128,7 @@ const TasksList = ({ children }: React.PropsWithChildren) => {
               <KanBanItem
                 key={task.id}
                 id={task.id}
-                data={{ ...task, stageId: "unnasigned" }}
+                data={{ ...task, stageId: "unassigned" }}
               >
                 <CardTaskMemo {...task} dueDate={task.dueDate || undefined} />
               </KanBanItem>
