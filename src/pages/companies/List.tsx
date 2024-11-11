@@ -9,18 +9,21 @@ import {
 import { useTable } from "@refinedev/antd";
 import { Input, Space, Table } from "antd";
 import { COMPANIES_LIST_QUERY } from "@/graphql/queries";
-import { getDefaultFilter, useGo } from "@refinedev/core";
+import { getDefaultFilter, HttpError, useGo } from "@refinedev/core";
 import { SearchOutlined } from "@ant-design/icons";
 import CustomAvatar from "@/components/custom.avatar";
 import { Text } from "@/components/Text";
 import { Company } from "@/graphql/schema.types";
 import { currencyNumber } from "@/utils";
+import { GetFieldsFromList } from "@refinedev/nestjs-query";
+import { CompaniesListQuery } from "@/graphql/types";
 
 export const CompanyList = ({ children }: React.PropsWithChildren) => {
   const go = useGo();
-  const { tableProps, filters } = useTable({
+  
+  const { tableProps, filters } = useTable<Company, HttpError, Company>({
     resource: "companies",
-    onSearch: (values: Company) => {
+    onSearch: (values) => {
       return [
         {
           field: "name",
@@ -28,9 +31,6 @@ export const CompanyList = ({ children }: React.PropsWithChildren) => {
           value: values.name,
         },
       ];
-    },
-    pagination: {
-      pageSize: 12,
     },
     sorters: {
       initial: [
@@ -48,6 +48,9 @@ export const CompanyList = ({ children }: React.PropsWithChildren) => {
           value: undefined,
         },
       ],
+    },
+    pagination: {
+      pageSize: 12,
     },
     meta: {
       gqlQuery: COMPANIES_LIST_QUERY,

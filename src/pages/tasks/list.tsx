@@ -10,12 +10,14 @@ import KanbanColumn from "@/components/tasks/kanban/KanbanColumn";
 import KanBanItem from "@/components/tasks/kanban/KanBanItem";
 import { UPDATE_TASK_STAGE_MUTATION } from "@/graphql/mutations";
 import { TASK_STAGES_QUERY, TASKS_QUERY } from "@/graphql/queries";
-import { TaskStage } from "@/graphql/schema.types";
-import { TasksQuery } from "@/graphql/types";
+import { TasksQuery, TaskStagesQuery } from "@/graphql/types";
 import { DragEndEvent } from "@dnd-kit/core";
 import { useList, useNavigation, useUpdate } from "@refinedev/core";
 import { GetFieldsFromList } from "@refinedev/nestjs-query";
 import React from "react";
+
+type Task = GetFieldsFromList<TasksQuery>;
+type TaskStage = GetFieldsFromList<TaskStagesQuery> & { task: Task[] };
 
 const TasksList = ({ children }: React.PropsWithChildren) => {
   const { replace } = useNavigation();
@@ -153,19 +155,19 @@ const TasksList = ({ children }: React.PropsWithChildren) => {
               key={column.id}
               id={column.id}
               title={column.title}
-              count={column.tasks.length}
+              count={column.task.length}
               onAddClick={() => handleAddCard({ stageId: column.id })}
             >
               {!isLoading &&
-                column.tasks.map((task) => (
-                  <KanBanItem key={task.id} id={task.id} data={task}>
+                column.task.map((item) => (
+                  <KanBanItem key={item.id} id={item.id} data={item}>
                     <CardTaskMemo
-                      {...task}
-                      dueDate={task.dueDate || undefined}
+                      {...item}
+                      dueDate={item.dueDate || undefined}
                     />
                   </KanBanItem>
                 ))}
-              {!column.tasks.length && (
+              {!column.task.length && (
                 <KanbanAddCardButton
                   onClick={() => handleAddCard({ stageId: column.id })}
                 />
