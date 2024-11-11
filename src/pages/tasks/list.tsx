@@ -177,12 +177,12 @@ export const TasksList = ({ children }: React.PropsWithChildren) => {
                 key={column.id}
                 id={column.id}
                 title={column.title}
-                count={column.tasks.length}
+                count={column.tasks?.length}
                 onAddClick={() => handleAddCard({ stageId: column.id })}
               >
                 {isLoading && <ProjectCardSkeleton />}
                 {!isLoading &&
-                  column.tasks.map((task) => {
+                  column.tasks?.map((task) => {
                     return (
                       <KanBanItem key={task.id} id={task.id} data={task}>
                         <ProjectCardMemo
@@ -192,7 +192,7 @@ export const TasksList = ({ children }: React.PropsWithChildren) => {
                       </KanBanItem>
                     );
                   })}
-                {!column.tasks.length && (
+                {!column.tasks?.length && (
                   <KanbanAddCardButton
                     onClick={() =>
                       handleAddCard({
